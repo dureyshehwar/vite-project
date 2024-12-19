@@ -1,35 +1,35 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import "./App.css";
+import Profile from "./Bird paradise/Profile/Profile";
 
-function App() {
-  const [count, setCount] = useState(0)
 
+  
+function App(){
+    
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+ 
+    <div>
+   <Profile
+   name={"Sun Conure"}
+   image={"birds.jpg"}
+   bio={"The sun conure(Aratinga solstitialis), also known as the sun parakeet, is a medium-sized,vibrantly colored parrot native to northeastern South America"} 
+   link={"https://en.wikipedia.org/wiki/Sun_conure"}
+/>
+   <Profile
+   name={"cockatiel"}
+   image={"cockatiel.webp"}
+   bio={"The cockatiel, also known as the weero/weiro or quarrion,is a medium-sized parrot that is a member of its own branch of the cockatoo family endemic to Australia"}
+   link={"https://en.wikipedia.org/wiki/Cockatiel"}
+    />
+<Profile
+   name={"Parakeet"}
+   image={"parakeet.jpg"}
+   bio={"Parakeets comprise about 115 species of birds that are seed-eating parrots of small size, slender build, and long, tapering tails.[citation needed]" }
+   link={"https://en.wikipedia.org/wiki/Parakeet"}
+   />
+
+    </div>
+  
+  );
 }
 
-export default App
+export default App;
