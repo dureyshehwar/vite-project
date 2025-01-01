@@ -8,25 +8,33 @@ type ProfileProps = {
   starred: boolean;
   deleteProfile: (id: number) => void;
   toggleStarred: (id: number) => void;
+  onEdit: () => void; // Added proper type for onEdit
 };
 
-const Profile: React.FC<ProfileProps> = (props) => {
-  return (
-    <div>
-      <img
-        src={`/images/${props.image}`}
-        alt={props.name}
-        className="img-responsive"
-      />
-      <h2>{props.name}</h2>
-      <p>{props.bio}</p>
-      <button onClick={() => props.toggleStarred(props.id)}>
-        {props.starred ? "Unstar" : "Star"}
-      </button>
-      <button onClick={() => props.deleteProfile(props.id)}>Delete</button>
-    </div>
-  );
-};
+const Profile = ({
+  id,
+  name,
+  image,
+  bio,
+  link,
+  starred,
+  deleteProfile,
+  toggleStarred,
+  onEdit,
+}: ProfileProps) => (
+  <div>
+    <h3>{name}</h3>
+    <img src={image} alt={name} />
+    <p>{bio}</p>
+    <a href={link} target="_blank" rel="noopener noreferrer">
+      Learn more
+    </a>
+    <button onClick={() => toggleStarred(id)}>{starred ? "Unstar" : "Star"}</button>
+    <button onClick={() => deleteProfile(id)}>Delete</button>
+    <button onClick={onEdit}>Edit</button>
+  </div>
+);
 
 export default Profile;
+
 

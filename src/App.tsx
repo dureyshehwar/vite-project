@@ -2,6 +2,8 @@
 import { useState } from "react";
 import "./App.css";
 import Profile from "./Bird-paradise/Profile/Profile";
+import Form from "./Bird-paradise/Form/Form"
+
 
 const App = () => {
   // Task 1: Create State
@@ -31,50 +33,61 @@ const App = () => {
       starred: false, // New boolean property
     },
   ]);
+  
+  const [currentProfile, setCurrentProfile] = useState(null); // To track the profile being edited
+  const [isFormVisible, setIsFormVisible] = useState(false); // To toggle form visibility
 
   // Task 2: Create New Item
-  const addNewProfile = () => {
-    const newProfile = {
-      id: Date.now(),
-      name: "Grey parrot",
-      image: "360_F_973856180_ZEXSE603DC6S7X09tSRAbR8mEpfLNXT3.jpg",
-      bio: "The grey parrot was formally described in 1758 by Swedish naturalist Carl Linnaeus in the tenth edition of Systema Naturae..",
-      link: "https://en.wikipedia.org/wiki/Grey_parrot",
-      starred: false, // Default value for new items
-    };
-    setList([...list, newProfile]);
+  const addNewProfile = (newProfile) =>{
+    setList([...list, { ...newProfile, id: Date.now(), starred: false }]);
+    setIsFormVisible(false);
   };
 
-  // Task 3: Delete Item
-  const deleteProfile = (id: number) => {
-    const updatedList = list.filter((item) => item.id !== id);
-    setList(updatedList);
-  };
-
-  // Task 4: Update Property
-  const toggleStarred = (id: number) => {
-    const updatedList = list.map((item) =>
-      item.id === id ? { ...item, starred: !item.starred } : item
+  const updateProfile = (updatedProfile)  => {
+    setList(
+      list.map((profile) =>
+        profile.id === updatedProfile.id ? updatedProfile : profile
+      )
     );
-    setList(updatedList);
+    setIsFormVisible(false);
+  };
+
+  const deleteProfile = (id) => {
+    setList(list.filter((item) => item.id !== id));
+  };
+
+  const toggleStarred = (id) => {
+    setList(
+      list.map((item) =>
+        item.id === id ? { ...item, starred: !item.starred } : item
+      )
+    );
+  };
+
+  const openForm = (profile = null) => {
+    setCurrentProfile(profile);
+    setIsFormVisible(true);
   };
 
   return (
     <div>
-      <button onClick={addNewProfile}>Add New Bird</button>
+      <button onClick={() => openForm=(null)}>Add New Bird</button>
       {list.map((profile) => (
         <Profile
           key={profile.id}
-          id={profile.id}
-          name={profile.name}
-          image={profile.image}
-          bio={profile.bio}
-          link={profile.link}
-          starred={profile.starred}
+          {...profile}
           deleteProfile={deleteProfile}
           toggleStarred={toggleStarred}
+          onEdit={() => openForm(profile)}
         />
       ))}
+      {isFormVisible && (
+        <Form
+          initialData={currentProfile}
+          onSave={currentProfile ? updateProfile : addNewProfile}
+          onClose={() => setIsFormVisible(false)}
+        />
+      )}
     </div>
   );
 };
