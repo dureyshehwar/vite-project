@@ -11,7 +11,7 @@ type ProfileProps = {
   onEdit: () => void; // Added proper type for onEdit
 };
 
-const Profile = ({
+const Profile:React.FC<ProfileProps> = ({
   id,
   name,
   image,
@@ -21,19 +21,23 @@ const Profile = ({
   deleteProfile,
   toggleStarred,
   onEdit,
-}: ProfileProps) => (
+})  => {
+  console.log(image)
+  return (
   <div>
     <h3>{name}</h3>
-    <img src={image} alt={name} />
+    <img src={image} alt={name} style={{ width: "100px", height: "100px",}}/>
     <p>{bio}</p>
     <a href={link} target="_blank" rel="noopener noreferrer">
       Learn more
     </a>
-    <button onClick={() => toggleStarred(id)}>{starred ? "Unstar" : "Star"}</button>
+    <button onClick={() => toggleStarred(id)}>
+      {starred ? "Unstar" : "Star"}</button>
     <button onClick={() => deleteProfile(id)}>Delete</button>
     <button onClick={onEdit}>Edit</button>
   </div>
 );
+};
 
 export default Profile;
 

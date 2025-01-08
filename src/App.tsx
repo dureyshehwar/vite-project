@@ -11,7 +11,7 @@ const App = () => {
     {
       id: 1,
       name: "Sun Conure",
-      image: "birds.jpg",
+      image: "./images/birds.jpg",
       bio: "The sun conure (Aratinga solstitialis), also known as the sun parakeet, is a medium-sized, vibrantly colored parrot native to northeastern South America.",
       link: "https://en.wikipedia.org/wiki/Sun_conure",
       starred: false, // New boolean property
@@ -27,7 +27,7 @@ const App = () => {
     {
       id: 3,
       name: "Parakeet",
-      image: "parakeet.jpg",
+      image: "./images/parakeet.jpg",
       bio: "Parakeets comprise about 115 species of birds that are seed-eating parrots of small size, slender build, and long, tapering tails.",
       link: "https://en.wikipedia.org/wiki/Parakeet",
       starred: false, // New boolean property
