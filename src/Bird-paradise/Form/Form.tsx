@@ -1,5 +1,7 @@
 type FormProps = {
+  list: []
     initialData: {
+      id: string;
       name: string;
       image: string;
       bio: string;
@@ -16,7 +18,7 @@ type FormProps = {
   
 import React, { useState, useEffect } from "react";
 
-const Form: React.FC<FormProps>= ({ initialData, onSave, onClose }) => {
+const Form: React.FC<FormProps>= ({ list, initialData, onSave, onClose }) => {
   const [formData, setFormData] = useState({
     name: "",
     image: "",
@@ -30,14 +32,16 @@ const Form: React.FC<FormProps>= ({ initialData, onSave, onClose }) => {
     }
   }, [initialData]);
 
-  const handleChange = (e) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.preventDefault();
-    onSave({ ...formData, id: initialData?.id || Date.now() });
+    
+    let lastId: number = list.length > 0 ? list[list.length -1].id : 0;
+    onSave({ ...formData, id: lastId + 1});
 };
   
 
@@ -84,7 +88,7 @@ const Form: React.FC<FormProps>= ({ initialData, onSave, onClose }) => {
             required
           />
         </label>
-        <button type="submit">Save</button>
+        <button type="button" onClick={(e) => handleSubmit(e)}>Save</button>
         <button type="button" onClick={onClose}>
           Cancel
         </button>

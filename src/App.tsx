@@ -19,7 +19,7 @@ const App = () => {
     {
       id: 2,
       name: "Cockatiel",
-      image: "cockatiel.webp",
+      image: "./images/cockatiel.webp",
       bio: "The cockatiel, also known as the weero/weiro or quarrion, is a medium-sized parrot that is a member of its own branch of the cockatoo family endemic to Australia.",
       link: "https://en.wikipedia.org/wiki/Cockatiel",
       starred: false, // New boolean property
@@ -65,13 +65,22 @@ const App = () => {
   };
 
   const openForm = (profile = null) => {
+    console.log("add a bird clicked")
     setCurrentProfile(profile);
     setIsFormVisible(true);
   };
 
   return (
     <div>
-      <button onClick={() => openForm=(null)}>Add New Bird</button>
+      <button type="button" onClick={() => openForm(null)}>Add New Bird</button>
+      {isFormVisible && (
+        <Form
+          list={list}
+          initialData={currentProfile}
+          onSave={currentProfile ? updateProfile : addNewProfile}
+          onClose={() => setIsFormVisible(false)}
+        />
+      )}
       {list.map((profile) => (
         <Profile
           key={profile.id}
@@ -81,13 +90,6 @@ const App = () => {
           onEdit={() => openForm(profile)}
         />
       ))}
-      {isFormVisible && (
-        <Form
-          initialData={currentProfile}
-          onSave={currentProfile ? updateProfile : addNewProfile}
-          onClose={() => setIsFormVisible(false)}
-        />
-      )}
     </div>
   );
 };

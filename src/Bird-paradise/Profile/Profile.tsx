@@ -22,7 +22,7 @@ const Profile:React.FC<ProfileProps> = ({
   toggleStarred,
   onEdit,
 })  => {
-  console.log(image)
+  
   return (
   <div>
     <h3>{name}</h3>
