@@ -6,7 +6,9 @@ import Form from "./Bird-paradise/Form/Form"
 
 
 const App = () => {
-  // Task 1: Create State
+  // // Task 1: Initialize state
+  // `list` contains the initial bird profiles data
+  // `setList` updates the state when profiles are added, edited, or deleted
   const [list, setList] = useState([
     {
       id: 1,
@@ -34,29 +36,40 @@ const App = () => {
     },
   ]);
   
+  // State to track the profile being edited or created
   const [currentProfile, setCurrentProfile] = useState(null); // To track the profile being edited
+  
+  // State to control the visibility of the form
   const [isFormVisible, setIsFormVisible] = useState(false); // To toggle form visibility
 
-  // Task 2: Create New Item
+  //  Task 2: Add a new profile to the list
   const addNewProfile = (newProfile) =>{
+    // Add the new profile to the list with a unique ID and default starred state
     setList([...list, { ...newProfile, id: Date.now(), starred: false }]);
-    setIsFormVisible(false);
+    setIsFormVisible(false);  // Hide the form after saving
   };
 
+  // Update an existing profile in the list
   const updateProfile = (updatedProfile)  => {
+    // Replace the old profile with the updated one based on matching ID
     setList(
       list.map((profile) =>
         profile.id === updatedProfile.id ? updatedProfile : profile
       )
     );
-    setIsFormVisible(false);
+    setIsFormVisible(false); // Hide the form after saving
   };
 
+  // Delete a profile from the list
   const deleteProfile = (id) => {
+    // Remove the profile with the given ID
     setList(list.filter((item) => item.id !== id));
   };
 
+
+  // Toggle the "starred" status of a profile
   const toggleStarred = (id) => {
+    // Flip the starred boolean for the profile with the given ID
     setList(
       list.map((item) =>
         item.id === id ? { ...item, starred: !item.starred } : item
@@ -64,30 +77,37 @@ const App = () => {
     );
   };
 
+  // Open the form for adding or editing a profile
   const openForm = (profile = null) => {
     console.log("add a bird clicked")
-    setCurrentProfile(profile);
-    setIsFormVisible(true);
+    setCurrentProfile(profile);// Set the profile being edited or null for new profiles
+    setIsFormVisible(true); // Show the form
   };
 
   return (
     <div>
+
+      {/* Button to open the form for adding a new bird */}
       <button type="button" onClick={() => openForm(null)}>Add New Bird</button>
+      {/* Conditional rendering of the form */}
       {isFormVisible && (
         <Form
-          list={list}
-          initialData={currentProfile}
-          onSave={currentProfile ? updateProfile : addNewProfile}
-          onClose={() => setIsFormVisible(false)}
+          list={list} // Pass the list of profiles to the form
+          initialData={currentProfile} // Pass the current profile for editing, or null for a new profile
+          onSave={currentProfile ? updateProfile : addNewProfile} // Use appropriate callback based on context
+          onClose={() => setIsFormVisible(false)}// Close the form without saving
         />
+        
       )}
+      
+      {/* Render the list of profiles */}
       {list.map((profile) => (
         <Profile
-          key={profile.id}
-          {...profile}
-          deleteProfile={deleteProfile}
-          toggleStarred={toggleStarred}
-          onEdit={() => openForm(profile)}
+          key={profile.id} // Unique key for each profile
+          {...profile} // Spread the profile properties as props
+          deleteProfile={deleteProfile} // Callback to delete the profile
+          toggleStarred={toggleStarred} // Callback to toggle the "starred" status
+          onEdit={() => openForm(profile)} // Open the form for editing this profile
         />
       ))}
     </div>
